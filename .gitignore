@@ -1,6 +1,7 @@
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
 
 # Editor
 .vscode/
@@ -13,5 +14,11 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 
-# Optional: uncomment if you don't want to track videos in git
-# videos/*.mp4
+# 原始大视频(超过 GitHub 100MB 限制,不上传)
+asset/videos/Park.mp4
+asset/videos/road.mp4
+asset/videos/resident.mp4
+asset/videos/waterfront.mp4
+
+# 根目录下 videos/ 若存在也忽略
+/videos/
