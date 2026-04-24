@@ -351,6 +351,22 @@
     opacity: 0.8; font-style: italic;
   }
 
+  /* ── Section description ── */
+  .section-desc {
+    font-size: 12px; color: var(--text-dim);
+    line-height: 1.6; margin: 6px 0 14px;
+    padding: 10px 14px;
+    background: rgba(0,168,150,0.04);
+    border-left: 3px solid var(--teal);
+    border-radius: 4px;
+  }
+  .section-desc b { color: var(--text); font-weight: 600; }
+  .section-desc code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; background: rgba(0,0,0,0.05);
+    padding: 1px 5px; border-radius: 3px;
+  }
+
   /* ── GitHub info banner ── */
   .info-banner {
     background: linear-gradient(135deg, var(--surface2), var(--surface));
@@ -390,25 +406,26 @@
 
 <header>
   <div>
-    <h1>EEG Urban Scene <span>Analysis</span></h1>
+    <h1>Urban Greenery &amp; <span>Stress Restoration</span></h1>
     <div class="header-sub">
-      Multimodal Neurophysiological Response to Urban Environments · Emotiv EPOC X
+      How spatial context shapes the stress-reducing effects of greenery — a VR-based physiological sensing study · EEG · EDA · Survey
     </div>
-  </div>
-  <div class="header-meta">
-    <div class="meta-badge"><span class="val">28</span><span class="lbl">Subjects</span></div>
-    <div class="meta-badge"><span class="val">4</span><span class="lbl">Scenes</span></div>
-    <div class="meta-badge"><span class="val">56</span><span class="lbl">Segments</span></div>
-    <div class="meta-badge"><span class="val">128</span><span class="lbl">Hz</span></div>
   </div>
 </header>
 
 <main>
+  <p class="section-desc" style="margin: 0 0 20px; padding: 14px 18px;">
+    <b>Study overview.</b> Rapid urbanization is intensifying stress and mental health burdens in cities. While greenery is known to aid psychological restoration, less is understood about <b>how different urban spatial contexts</b> shape that effect. This study exposes participants to four 360° VR urban environments — <b>Waterfront</b>, <b>Park</b>, <b>Residential</b>, <b>Road</b> — with greenery levels standardized via <b>SegFormer-b2 / ADE20K</b> semantic segmentation (GVI 24–34%). Physiological responses are captured through <b>EEG</b> (frontal alpha asymmetry &amp; arousal), <b>EDA</b> (tonic/phasic metrics), and <b>post-exposure surveys</b> (emotion &amp; presence scores), enabling direct comparison of how urban context — not just greenery quantity — drives stress reduction.
+  </p>
+
   <div class="vp-card">
     <div class="vp-title">
       🎬 Scene Viewer — SegFormer CV Mask vs Original
     </div>
     <div class="vp-title-sub">Left: SegFormer semantic segmentation · Right: original video · Press ▶ to sync playback</div>
+    <p class="section-desc">
+      <b>About this view.</b> Each of the four VR scenes (Waterfront, Park, Road, Residents) was recorded in 360°. The left panel shows a per-pixel scene parse produced by <b>SegFormer</b> (ADE20K classes) — it labels what the participant is looking at (sky, vegetation, road, building, water, etc.). The right panel shows the raw footage. Use the scene buttons to switch; both videos stay in lock-step so you can see which visual elements the participant was exposed to at any moment.
+    </p>
 
     <div class="vp-btn-row">
       <button class="vp-btn active" id="vbtn-Waterfront" onclick="selectVideo('Waterfront')" style="border-color:var(--waterfront);background:rgba(0,168,150,0.1);color:var(--waterfront);">
@@ -452,6 +469,9 @@
     <div class="vp-charts">
       <div class="vp-chart-card">
         <h4 id="elemChartTitle">Element Proportion Over Time</h4>
+        <p class="section-desc">
+          The % of frame pixels belonging to each <b>visual element class</b> (from SegFormer), plotted over the video timeline. Toggle classes in the <b>Visual Elements</b> panel on the right to focus on specific content (e.g. vegetation vs. road surface). Use this to see how scene composition changes as the participant walks through each environment.
+        </p>
         <div class="ts-container">
           <div class="timeline-marker" id="markerElem" style="display:none;"></div>
           <canvas id="vpElemChart" height="140"></canvas>
@@ -459,6 +479,11 @@
       </div>
       <div class="vp-chart-card">
         <h4>Arousal Index &amp; Δ FAA Over Time</h4>
+        <p class="section-desc">
+          Two EEG-derived affective indices, time-aligned to the video:
+          <b>Arousal Index</b> = <code>(β<sub>F3</sub>+β<sub>F4</sub>) / (α<sub>F3</sub>+α<sub>F4</sub>)</code> — higher values suggest greater cortical activation / stress.
+          <b>Δ FAA (Frontal Alpha Asymmetry)</b> = <code>ln(α<sub>F4</sub>) − ln(α<sub>F3</sub>)</code> — positive values are linked to approach/positive affect, negative to withdrawal/negative affect.
+        </p>
         <div class="ts-container">
           <div class="timeline-marker" id="markerArousal" style="display:none;"></div>
           <canvas id="vpArousalChart" height="140"></canvas>
@@ -471,6 +496,9 @@
         <h4>🧠 Scalp Topomap — 5-channel band power (AF3 · T7 · Pz · T8 · AF4)</h4>
         <div class="topo-band-row" id="topoBandRow"></div>
       </div>
+      <p class="section-desc">
+        A top-down view of the scalp showing the average <b>band power</b> at each EEG electrode for the selected scene. The Emotiv EPOC X streams 14 channels; here we visualise the 5 positions most relevant to stress/affect: frontal <code>AF3/AF4</code>, temporal <code>T7/T8</code>, parietal <code>Pz</code>. Color is interpolated (IDW) between sensor sites. Switch between frequency bands — <b>Theta</b> (emotional load), <b>Alpha</b> (relaxation), <b>Beta</b> (alertness/stress) — to compare spatial patterns across the four urban scenes.
+      </p>
       <div class="topo-body">
         <div class="topo-canvas-wrap">
           <canvas id="topoCanvas" width="560" height="480"></canvas>
@@ -618,7 +646,7 @@ const TOPO_FALLBACK = {
   }
 };
 const TOPO = (typeof window !== 'undefined' && window.TOPO_DATA) ? window.TOPO_DATA : TOPO_FALLBACK;
-const TOPO_BANDS = TOPO.bands || ['Raw','Delta','Theta','Alpha','Beta'];
+const TOPO_BANDS = ['Theta','Alpha','Beta'];
 
 // ══════════════════════════════════════════════════════════════════
 // 2D BRAIN TOPOMAP RENDERER
