@@ -367,30 +367,6 @@
     padding: 1px 5px; border-radius: 3px;
   }
 
-  /* ── GitHub info banner ── */
-  .info-banner {
-    background: linear-gradient(135deg, var(--surface2), var(--surface));
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px 24px;
-    margin-top: 24px;
-    display: flex; align-items: flex-start; gap: 16px;
-  }
-  .info-banner .icon {
-    width: 36px; height: 36px; border-radius: 10px;
-    background: var(--teal-glow);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; font-size: 18px;
-  }
-  .info-banner h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
-  .info-banner p { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
-  .info-banner code {
-    background: var(--surface3);
-    padding: 1px 6px; border-radius: 3px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; color: var(--teal);
-  }
-
   @media (max-width: 1100px) {
     .vp-body { flex-direction: column; }
     .vp-sidebar { width: 100%; }
@@ -518,20 +494,6 @@
       </div>
     </div>
 
-  </div>
-
-  <div class="info-banner">
-    <div class="icon">📦</div>
-    <div>
-      <h4>GitHub Deployment</h4>
-      <p>
-        This dashboard is self-contained. Place your video files in an <code>asset/videos/</code> folder
-        alongside this <code>index.html</code>. Update the <code>VP_VIDEOS</code> config object
-        paths to match (e.g. <code>asset/videos/Waterfront_SegFormer_Render_web.mp4</code>). If you generated
-        <code>topomap_data.js</code> from the notebook, include it alongside this file.
-        For GitHub Pages, enable Pages in repo Settings → deploy from <code>main</code> branch.
-      </p>
-    </div>
   </div>
 </main>
 
